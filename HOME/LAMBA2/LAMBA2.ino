@@ -1,4 +1,4 @@
-//ON bahçe için 1 nol aydınlatma
+//ON bahçe için 2 nol aydınlatma
 
 
 
@@ -20,9 +20,9 @@ void setup()
   if (!driver.init()) ;  // Bı komut mutlaka olmalı... **************
   digitalWrite(LED_BUILTIN, LOW);
    digitalWrite(lamba, LOW);
-      //   Serial.begin(115200);
+       //  Serial.begin(115200);
   if (!driver.init()) Serial.println("FHRFOFAA");
-//  Serial.println("hazır");
+  //Serial.println("hazır");
 }
 
 void loop()
@@ -42,8 +42,8 @@ void rfal()
        String rdgelen = (char*)buf;
        rdgelen= rdgelen.substring(0,8);
       // Serial.println(rdgelen);
-       if(rdgelen == "THGNL1ON")  digitalWrite(lamba, HIGH);
-       if(rdgelen == "THGNL1OF") digitalWrite(lamba, LOW);
+       if(rdgelen == "THGNL2ON")  digitalWrite(lamba, HIGH);
+       if(rdgelen == "THGNL2OF") digitalWrite(lamba, LOW);
       
    
     }
