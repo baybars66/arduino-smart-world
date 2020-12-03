@@ -35,7 +35,7 @@ void loop() {
 
   if(irrecv.decode(&result)) {
     deger = result.value;
-    //  Serial.println(result.value, HEX);
+      Serial.println(deger, HEX);
    // if( deger<0) deger = deger* (-1);
     
   //  Serial.println(deger);
@@ -107,8 +107,8 @@ void is()
        rdgonder ("THGNOKON");
         break;
  
-
 }
+  deger=0X0000;
 
 }
 
@@ -122,7 +122,10 @@ void rdgonder(String rdgiden) //
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
  Serial.println(msg);
- // Serial.println("Hello World!");
+  Serial.println("Hello World!");
+   
   delay(10);
+
+  
  }
  
