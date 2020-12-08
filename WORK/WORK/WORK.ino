@@ -1,9 +1,8 @@
 /*
-  WORK SERVER
-  
-  WebSocketClientSocketIO.ino
+   WORK SERVER
+   WebSocketClientSocketIO.ino
 
-
+   
 */
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
@@ -12,6 +11,7 @@
 #include <Hash.h>
 
 
+ 
 char msg[7]="";
 int almkon = 1;
 String str = "";
@@ -60,7 +60,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         str = String((char*) payload);
         //Serial.println(str);
         delay(50);
-        gelen(str); //seriyolla(str);
+        gelen(str);
         
       
         
@@ -85,7 +85,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 
 void setup() {
-  
+
+ 
   Serial.begin(115200);
 
   USE_SERIAL.begin(115200);
@@ -103,10 +104,7 @@ void setup() {
     delay(1000);
   }
 
- // WiFiMulti.addAP("Baybars", "Capan66-kablosuz");
-   WiFiMulti.addAP("EMNONU", "Capan66-kablosuz");
-
-
+  WiFiMulti.addAP("EMNONU", "Capan66-kablosuz");
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
@@ -121,7 +119,6 @@ void setup() {
 
 
 }
-
 void loop() {
 
  webSocket.loop();
@@ -145,10 +142,11 @@ void loop() {
   }
 
 
-serial();
+ serial();
 
 
 }
+
 
  void serial()
  {
@@ -170,24 +168,23 @@ serial();
 
 
 void gelen( String wifigelen)
-{  
+{
   int uzunluk = wifigelen.length();
   uzunluk=uzunluk - 2;
   txtmi = wifigelen.substring(0,2);
   if (txtmi=="42") wifigelen=wifigelen.substring (19, uzunluk);
   wifigelen = wifigelen.substring(0,8);
-  if (wifigelen == "TWALMOFF" ) almkon = 2;
-  if (wifigelen == "TWALMONN" ) almkon = 1;
-  
-  if (wifigelen.substring(0,2) =="TW") Serial.println(wifigelen);   
+  if (wifigelen =="TWALMOFF")  almkon = 2;
+  if (wifigelen =="TWALMONN")  almkon = 1;
+       
+if (wifigelen.substring(0,2) =="TW") Serial.println(wifigelen); 
+     
+if (wifigelen == "TAREPORT" ) rap();
+if (wifigelen == "TWREPORT" ) rap();
 
-  if (wifigelen == "TAREPORT" ) rap();
-  if (wifigelen == "TWREPORT" ) rap();
-   
+    
   str="";
-  
 }
-
 
 
 
@@ -201,8 +198,9 @@ void gelen( String wifigelen)
 
 
 
+ 
 void rap()
-{
+{  
   if ( almkon == 1) yolla ("FWOKOKON");  
   if ( almkon == 2) yolla ("FWOKOKOF");  
 

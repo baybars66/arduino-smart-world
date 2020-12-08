@@ -6,15 +6,25 @@
  ****************************/
 
 
+#include <RH_ASK.h>
+#include <SPI.h> // Not actually used but needed to compile
 
+RH_ASK driver;
 
+//char *controller;
 
 const int titre = 4;
+String rdgelen="";
+String rdgiden ="";
+
+int almkon =1;
+String srgelen="";
+String srgiden ="";
 
 void setup() {
-   pinMode(titre,INPUT);
+  pinMode(titre,INPUT);
   Serial.begin(115200);
-
+  if (!driver.init()) Serial.println("FHRFOFAA");
   Serial.println("hazır");
   
 }
@@ -22,28 +32,14 @@ void setup() {
 void loop()
 {
 
- 
-   int tit = digitalRead(titre);
   
-   if (tit==1) { 
-    
-  Serial.println("FWALMALM");
+  al(); //from interbet over mcu via serialport
 
-  //     Serial.println(tit);
-            delay(1500);
-    //
- }
-          
-
-
-  
- // al(); //from interbet over mcu via serialport
-
- // rfal(); //from rf
+  rfal(); //from rf
    
 }
 
-/*
+
 
 void al()
 {  
@@ -58,13 +54,26 @@ void al()
              rdgonder(srgelen);
             }
 
+       /*
+        srgelen= srgelen.substring(0,8);
+
+        if (srgelen =="THALMOFF") almkon = 0;
+        if (srgelen =="THALMONN") almkon = 1;
+      
+        if (srgelen =="TAREPORT") 
+           {  if ( almkon == 1) Serial.println("FHOKOKON");  
+             if ( almkon == 0) Serial.println("FHOKOKOF");  
+
+          }
+
+*/
         
         }
 
 }
-*/
 
-/*
+
+
   
 void rfal()
 {  
@@ -95,7 +104,7 @@ void rfal()
 void rdgonder(String rdgiden) //
 {
   //Serial.println(rdgiden);
-  char *msg = "FWNNNNNN";
+  char *msg = "FHNNNNNN";
   rdgiden.toCharArray(msg,9);
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
@@ -103,4 +112,14 @@ void rdgonder(String rdgiden) //
  // Serial.println("Hello World!");
   delay(10);
  }
- */
+
+ void pir()
+ {
+   int tit = digitalRead(titre);
+   if (tit==1)
+   { 
+   Serial.println("FWALMALM");
+   delay(10);
+    }
+ }
+ 

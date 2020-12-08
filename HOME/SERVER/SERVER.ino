@@ -1,6 +1,5 @@
 /*
   HOME SERVER
-  
   WebSocketClientSocketIO.ino
 
 
@@ -104,9 +103,6 @@ void setup() {
   }
 
   WiFiMulti.addAP("Baybars", "Capan66-kablosuz");
- //  WiFiMulti.addAP("EMNONU", "Capan66-kablosuz");
-
-
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
