@@ -32,7 +32,7 @@ void setup() {
 void loop()
 {
 
-  
+  pir();
   al(); //from interbet over mcu via serialport
 
   rfal(); //from rf
