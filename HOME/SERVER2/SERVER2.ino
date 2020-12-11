@@ -11,8 +11,6 @@
 
 RH_ASK driver;
 
-//char *controller;
-
 
 String rdgelen="";
 String rdgiden ="";
@@ -44,28 +42,12 @@ void al()
   while (Serial.available())
        {
         srgelen= Serial.readString();
-
-        
         if (srgelen.substring(0,2)=="TH")
            {
-    // bunu kullanma hemen kapat Serial.println(srgelen);
+             // bunu kullanma hemen kapat Serial.println(srgelen);
              rdgonder(srgelen);
             }
 
-       /*
-        srgelen= srgelen.substring(0,8);
-
-        if (srgelen =="THALMOFF") almkon = 0;
-        if (srgelen =="THALMONN") almkon = 1;
-      
-        if (srgelen =="TAREPORT") 
-           {  if ( almkon == 1) Serial.println("FHOKOKON");  
-             if ( almkon == 0) Serial.println("FHOKOKOF");  
-
-          }
-
-*/
-        
         }
 
 }
@@ -79,19 +61,10 @@ void rfal()
     uint8_t buflen = sizeof(buf);
     if (driver.recv(buf, &buflen)) // Non-blocking
     { 
-  
       int i;
-      // Message with a good checksum received, dump it.
-     // Serial.print("Message: ");
-    //  Serial.println((char*)buf);    
-       String rdgelen = (char*)buf;
-       rdgelen= rdgelen.substring(0,8);
-     Serial.println(rdgelen);  
-     //  if (rdgelen == "FHALMALM" && almkon == 1) Serial.println(rdgelen);  
-      // if (rdgelen != "FHALMALM") Serial.println(rdgelen);  
-       
-      //if(rdgelen == "THS1ONAA") digitalWrite(LED_BUILTIN, HIGH);
-   
+      String rdgelen = (char*)buf;
+      rdgelen= rdgelen.substring(0,8);
+      if ( rdgelen.substring(0,2) == "FH")  Serial.println(rdgelen); 
     
     }
 
@@ -107,7 +80,6 @@ void rdgonder(String rdgiden) //
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
   //Serial.println(msg);
- // Serial.println("Hello World!");
-  delay(10);
+   delay(10);
  }
  
