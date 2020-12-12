@@ -19,7 +19,7 @@ String rdgelen="1";
 String rdgiden ="2";
 String sicaklik ="";
 String gitti = "";
-
+int control = 1;
 
 
 void setup() {
@@ -36,12 +36,23 @@ void setup() {
 void loop()
 {
   
- rdgelen="1";
+ if (digitalRead(Buton) == 1)
+ { control = 2;
+  Serial.print("Control: ");
+  Serial.println(control);
+  isik();
+  delay(1000); /// Değiştirme
  
- rfal(); //from rf
 
- if (digitalRead(Buton) == 1) isik();
-  
+   //return;
+ } 
+  else 
+     {       
+       control =1;
+      // rdgelen="1";
+       rfal(); //from rf
+      }
+ 
 }
 
 
@@ -51,32 +62,34 @@ void isik()
      {
        digitalWrite(LED_BUILTIN, HIGH);
        rdgonder("THGNL1ON");
+       
       }
   else
      {
        digitalWrite(LED_BUILTIN, LOW);
        rdgonder("THGNL1OF");
+       
       }
     
-    delay(500);
+    
 
 }
 
 
   
 void rfal()
-{  
+{    
     uint8_t buf[8];
     uint8_t buflen = sizeof(buf);
     if (driver.recv(buf, &buflen)) // Non-blocking
-    {  
+    {  Serial.println("Gelen var");
       int i;
       rdgelen = (char*)buf;
       rdgelen= rdgelen.substring(0,8);
 
       if (rdgelen.substring(0,2) != "TH") return;
-      
-       //Serial.println(rdgelen);  
+        Serial.print("RD GRLRN: "); 
+       Serial.println(rdgelen);  
       if (rdgelen == "THREPORT")
          { 
            isi();
@@ -88,14 +101,18 @@ void rfal()
          secure();
          return;
        }
-   
+
    if ( rdgelen!= gitti) 
         {
          rdgonder(rdgelen);
          gitti = rdgelen;
+        
          }
        
      }
+    
+  
+   
 
  
 }
@@ -108,8 +125,12 @@ void rdgonder(String rdgiden) //
   rdgiden.toCharArray(msg,9);
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
+  Serial.print("Gidecek");
   Serial.println(msg);
-  delay(10);
+  driver.waitPacketSent();
+  delay(2000);      /// Değiştirme
+    Serial.print("Gitti: ");
+         Serial.println(msg);
  }
 
 
@@ -119,7 +140,7 @@ void rdgonder(String rdgiden) //
   int chk = DHT11.read(DHT11PIN);
   int bb =DHT11.temperature;
   String baba = String(bb);
-  sicaklik = "FWTEMP" + baba;
+  sicaklik = "FHTEMP" + baba;
   rdgonder(sicaklik);
 
 }
