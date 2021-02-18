@@ -41,8 +41,8 @@ void loop()
   Serial.print("Control: ");
   Serial.println(control);
   isik();
-  delay(1000); /// Değiştirme
- 
+ // delay(1000); /// Değiştirme
+  delay(100);
 
    //return;
  } 
@@ -50,7 +50,7 @@ void loop()
      {       
        control =1;
       // rdgelen="1";
-       rfal(); //from rf
+      rfal(); //from rf
       }
  
 }
@@ -61,13 +61,15 @@ void isik()
   if (digitalRead(LED_BUILTIN) == LOW )
      {
        digitalWrite(LED_BUILTIN, HIGH);
-       rdgonder("THGNL1ON");
+      rdgonder("THGNL1ON");
+      //rdgonder("TWOFL1ON");
        
       }
   else
      {
        digitalWrite(LED_BUILTIN, LOW);
-       rdgonder("THGNL1OF");
+        rdgonder("THGNL1OF");
+       // rdgonder("TWOFL1OF");
        
       }
     
@@ -82,14 +84,14 @@ void rfal()
     uint8_t buf[8];
     uint8_t buflen = sizeof(buf);
     if (driver.recv(buf, &buflen)) // Non-blocking
-    {  Serial.println("Gelen var");
+    { // Serial.println("Gelen var");
       int i;
       rdgelen = (char*)buf;
       rdgelen= rdgelen.substring(0,8);
 
       if (rdgelen.substring(0,2) != "TH") return;
-        Serial.print("RD GRLRN: "); 
-       Serial.println(rdgelen);  
+      //  Serial.print("RD GRLRN: "); 
+      Serial.println(rdgelen);  
       if (rdgelen == "THREPORT")
          { 
            isi();
@@ -125,12 +127,15 @@ void rdgonder(String rdgiden) //
   rdgiden.toCharArray(msg,9);
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
-  Serial.print("Gidecek");
-  Serial.println(msg);
+//  Serial.print("Gidecek");
+  //Serial.println(msg);
+//  driver.waitPacketSent();
+ // delay(2000);      /// Değiştirme
+  delay(100);
+    driver.send((uint8_t *)msg, strlen(msg)); //DİKKAT 2. KEZ YOLLUYORUM
   driver.waitPacketSent();
-  delay(2000);      /// Değiştirme
-    Serial.print("Gitti: ");
-         Serial.println(msg);
+    //Serial.print("Gitti: ");
+        // Serial.println(msg);
  }
 
 
@@ -147,7 +152,7 @@ void rdgonder(String rdgiden) //
 
  void secure()
 {
-  
+ // Serial.print("SECURE: ");
  digitalWrite(LED_BUILTIN, LOW);
  rdgonder("THGNL1OF");
  delay (10);
