@@ -23,6 +23,7 @@ void setup()
   pinMode(Buton, INPUT);
    pinMode(gir,INPUT);
    Serial.begin(115200);    // Debugging only
+
    if (!driver.init())
         Serial.println("init failed");
     Serial.println("hazır");
@@ -57,7 +58,8 @@ void hareket()
 void smoke()
 {
    duman = analogRead(Buton);
-  if (duman > 220) {  rdgonder("FHDUMANN");
+   //Serial.println(duman);
+  if (duman > 450) {  rdgonder("FHDUMANN");
    
   delay(10000);
 
@@ -69,7 +71,7 @@ void smoke()
 {
 
   int chk = DHT11.read(DHT11PIN);
-  int bb =DHT11.temperature;
+ int bb =DHT11.temperature;
   String baba = String(bb);
   if(bb>35) {
 //String sicaklik = "FHTEMP" + baba;
@@ -91,6 +93,6 @@ void rdgonder(String rdgiden)
   rdgiden.toCharArray(msg,9);
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
- // Serial.println(msg);
+  Serial.println(msg);
   delay(10);
  }
