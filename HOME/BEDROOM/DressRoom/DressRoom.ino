@@ -47,7 +47,8 @@ void hareket()
    int yaban = analogRead(gir);
 //  Serial.println(yaban);
    if (yaban>=550 )
-      { 
+      { rdgonder("FHALMALM");
+    delay (30);
         rdgonder("FHPIRALM") ;
         delay (10000); //3000 iyi
     
@@ -59,7 +60,10 @@ void smoke()
 {
    duman = analogRead(Buton);
    //Serial.println(duman);
-  if (duman > 450) {  rdgonder("FHDUMANN");
+  if (duman > 450) {  
+    rdgonder("FHALMALM");
+    delay (30);
+    rdgonder("FHDUMANN");
    
   delay(10000);
 
@@ -76,7 +80,10 @@ void smoke()
   if(bb>35) {
 //String sicaklik = "FHTEMP" + baba;
  // Serial.println(sicaklik);
+ rdgonder("FHALMALM");
+    delay (30);
    rdgonder("FHISIALM");
+   
    delay(10000);
   }
 
