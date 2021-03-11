@@ -8,11 +8,11 @@
 #define Buton 7
 
 dht11 DHT11;
+
 RH_ASK driver;
 
-
-
 const int gir=A6;  
+
 String rdgiden ="";
 int duman = 1;
 
@@ -36,8 +36,8 @@ void setup()
 void loop()
 {
   hareket();
-  isi();
-  smoke();
+  //isi();
+  //smoke();
 
 
 }
@@ -47,10 +47,11 @@ void hareket()
    int yaban = analogRead(gir);
 //  Serial.println(yaban);
    if (yaban>=550 )
-      { rdgonder("FHALMALM");
-    delay (30);
-        rdgonder("FHPIRALM") ;
-        delay (10000); //3000 iyi
+      {    rdgonder("FHPIRALM");
+      
+       delay (1000);
+       almgonder();
+       delay (10000); //3000 iyi
     
          } 
 }
@@ -62,7 +63,7 @@ void smoke()
    //Serial.println(duman);
   if (duman > 450) {  
     rdgonder("FHALMALM");
-    delay (30);
+    delay (300);
     rdgonder("FHDUMANN");
    
   delay(10000);
@@ -81,7 +82,7 @@ void smoke()
 //String sicaklik = "FHTEMP" + baba;
  // Serial.println(sicaklik);
  rdgonder("FHALMALM");
-    delay (30);
+    delay (1000);
    rdgonder("FHISIALM");
    
    delay(10000);
@@ -93,7 +94,6 @@ void smoke()
 
 
 void rdgonder(String rdgiden)
-//void rdgonder()
 {
   //Serial.println(rdgiden);
   char *msg = "FHALMALM";
@@ -101,5 +101,20 @@ void rdgonder(String rdgiden)
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
   Serial.println(msg);
-  delay(10);
+  delay(1000);
+
+ }
+
+ 
+void almgonder()
+{
+  
+  char *bbb = "FHALMALM";
+  String sabit="FHALMALM";
+  sabit.toCharArray(bbb,9);
+  driver.send((uint8_t *)bbb, strlen(bbb));
+  driver.waitPacketSent();
+  Serial.println("bbbb");
+  Serial.println(bbb);
+ delay(1000);
  }
