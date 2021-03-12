@@ -25,6 +25,7 @@ String ekran="";
 int say=0;
 int hatacount=0;
 int buzz=10;
+int zaman=0;
 const byte SATIR = 4;
 const byte SUTUN= 3;
 char keys[SATIR][SUTUN] = {
@@ -48,7 +49,7 @@ display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 // Tampon Bellek sıfırlama
 display.clearDisplay();
 
-Serial.begin(115200);
+//Serial.begin(115200);
 pinMode(A0, OUTPUT);
 pinMode(buzz, OUTPUT);
 Serial.println("hazır");
@@ -67,21 +68,21 @@ void loop()
 {  char key = kpd.getKey();
    if(key){
     cal(50);
-      Serial.println(key);
+     // Serial.println(key);
 
       ekran = String(ekran + key);
       yaz(ekran);
       say=say+1;
-        if (say==4)
+        if (say==6)
          {
-            if(ekran=="6680")
+            if(ekran=="668066")
                {
                  yaz("EVE GIR");
                  cal(500);
                  rdgonder("TWOFL1ON");
                  
                }
-            if(ekran!="6680")
+            if(ekran!="668066")
              {
               hatakont();
              }
@@ -89,8 +90,15 @@ void loop()
              say=0;
           }
     }
-delay(15);
 
+  else{
+    zaman=zaman+1;
+    if(zaman==500){
+      yaz ("WELCOME");
+      zaman=0;
+    }
+  }
+delay(15);
 }
 
 
@@ -127,7 +135,7 @@ void hatakont()
   delay(10);
   cal(50);
   hatacount=hatacount+1;
-  if (hatacount==4){ yaz("****");
+  if (hatacount==3){ yaz("****");
    rdgonder("TWOFL1OF");
      hatacount=0;
   }
