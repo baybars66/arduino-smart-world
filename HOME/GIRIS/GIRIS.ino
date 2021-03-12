@@ -67,6 +67,7 @@ delay(200);
 void loop()
 {  char key = kpd.getKey();
    if(key){
+    zaman=0;
     cal(50);
      // Serial.println(key);
 
@@ -75,11 +76,33 @@ void loop()
       say=say+1;
         if (say==6)
          {
+            if(ekran=="120212")
+               {
+                 rdgonder("TWOFL1OF");
+                 hatacount=0;
+                 yaz("BYE BYE");
+                 cal(50);
+                 delay(100);
+                 cal(50);
+                 delay(100);
+                  cal(50);
+                 delay(100);
+                 cal(300);
+                 delay(100);
+                 cal(50);
+                 delay(100);
+                 cal(50);
+                  ekran="";
+             say=0;
+                 return;
+               }
+          
             if(ekran=="668066")
                {
                  yaz("EVE GIR");
                  cal(500);
                  rdgonder("TWOFL1ON");
+                 hatacount=0;
                  
                }
             if(ekran!="668066")
