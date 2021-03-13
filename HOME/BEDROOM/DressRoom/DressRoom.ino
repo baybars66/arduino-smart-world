@@ -12,48 +12,43 @@ dht11 DHT11;
 RH_ASK driver;
 
 const int gir=A6;  
-
-String rdgiden ="";
 int duman = 1;
 
 
 void setup()
 {
   
-  pinMode(Buton, INPUT);
-   pinMode(gir,INPUT);
+   pinMode(Buton, INPUT);
+   pinMode(gir, INPUT);
    Serial.begin(115200);    // Debugging only
 
-   if (!driver.init())
-        Serial.println("init failed");
-    Serial.println("hazır");
+   if (!driver.init()) Serial.println("init failed");
+   
+   Serial.println("hazır");
 
-       
-         
 }
 
 
 void loop()
 {
+  
   hareket();
-  //isi();
-  //smoke();
-
+  isi();
+  smoke();
 
 }
 
 void hareket()
 {
    int yaban = analogRead(gir);
-//  Serial.println(yaban);
+   //Serial.println(yaban);
    if (yaban>=550 )
-      {    rdgonder("FHPIRALM");
-      
-       delay (1000);
-       almgonder();
-       delay (10000); //3000 iyi
-    
-         } 
+     {   
+       rdgonder("FHALMALM");
+       delay (2000);
+       rdgonder("FHPIRALM");
+       delay (10000);
+     } 
 }
 
 
@@ -61,29 +56,29 @@ void smoke()
 {
    duman = analogRead(Buton);
    //Serial.println(duman);
-  if (duman > 450) {  
-    rdgonder("FHALMALM");
-    delay (300);
-    rdgonder("FHDUMANN");
-   
-  delay(10000);
+   if (duman > 450)
+    {  
+      rdgonder("FHALMALM");
+      delay (300);
+      rdgonder("FHDUMANN");
+      delay(10000);
 
-  }
+    }
 }
 
 
  void isi()
 {
-
   int chk = DHT11.read(DHT11PIN);
- int bb =DHT11.temperature;
+  int bb =DHT11.temperature;
   String baba = String(bb);
-  if(bb>35) {
-//String sicaklik = "FHTEMP" + baba;
- // Serial.println(sicaklik);
- rdgonder("FHALMALM");
+  if(bb>35)
+   {
+    //String sicaklik = "FHTEMP" + baba;
+    // Serial.println(sicaklik);
+    rdgonder("FHALMALM");
     delay (1000);
-   rdgonder("FHISIALM");
+    rdgonder("FHISIALM");
    
    delay(10000);
   }
@@ -91,30 +86,18 @@ void smoke()
 
 }
 
+ 
+
+
 
 
 void rdgonder(String rdgiden)
 {
-  //Serial.println(rdgiden);
-  char *msg = "FHALMALM";
-  rdgiden.toCharArray(msg,9);
+  char a[]="bbtt";
+  rdgiden.toCharArray(a,9);
+  char *msg = a;
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
   Serial.println(msg);
-  delay(1000);
-
- }
-
- 
-void almgonder()
-{
-  
-  char *bbb = "FHALMALM";
-  String sabit="FHALMALM";
-  sabit.toCharArray(bbb,9);
-  driver.send((uint8_t *)bbb, strlen(bbb));
-  driver.waitPacketSent();
-  Serial.println("bbbb");
-  Serial.println(bbb);
- delay(1000);
- }
+  delay(500);
+}

@@ -1,4 +1,4 @@
-  //ON bahçe için 1 nol aydınlatma
+  //Oturma odası gece lambası için 1 nol aydınlatma
 
 
 
@@ -7,7 +7,7 @@
 
 RH_ASK driver;
 
-int lamba =2 ;
+//int lamba =2 ;
 
 String rdgelen="";
 
@@ -15,11 +15,11 @@ void setup()
 
 
 
-{ pinMode(lamba, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
+{ //pinMode(lamba, OUTPUT);
+  //pinMode(LED_BUILTIN, OUTPUT);
   if (!driver.init()) ;  // Bı komut mutlaka olmalı... **************
-  digitalWrite(LED_BUILTIN, LOW);
-   digitalWrite(lamba, LOW);
+  digitalWrite(LED_BUILTIN, HIGH);
+  // digitalWrite(lamba, HIGH);
         Serial.begin(115200);
   if (!driver.init()) Serial.println("FHRFOFAA");
   Serial.println("hazır");
@@ -42,8 +42,9 @@ void rfal()
        String rdgelen = (char*)buf;
        rdgelen= rdgelen.substring(0,8);
        Serial.println(rdgelen);
-       if(rdgelen == "THLRNLON") digitalWrite(LED_BUILTIN, HIGH);
-       if(rdgelen == "THLRNLOF") digitalWrite(LED_BUILTIN, LOW);
+       if(rdgelen == "THBMARON") digitalWrite(LED_BUILTIN, LOW);
+       if(rdgelen == "THBMAROF") digitalWrite(LED_BUILTIN, HIGH);
+       if(rdgelen == "THALMOFF") digitalWrite(LED_BUILTIN, HIGH);
       
    
     }

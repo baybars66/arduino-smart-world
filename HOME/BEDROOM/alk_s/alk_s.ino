@@ -115,8 +115,19 @@ void isik()
  }
 
 
+void rdgonder(String rdgiden)
+{
+  char a[]="bbtt";
+  rdgiden.toCharArray(a,9);
+  char *msg = a;
+  driver.send((uint8_t *)msg, strlen(msg));
+  driver.waitPacketSent();
+  Serial.println(msg);
+  delay(500);
+}
 
 
+/*
 void rdgonder(String rdgiden) //
 {  //Serial.println("mmm");
  // Serial.println(rdgiden);
@@ -129,3 +140,5 @@ void rdgonder(String rdgiden) //
  // Serial.println("Hello World!");
   delay(10);
  }
+
+ */
