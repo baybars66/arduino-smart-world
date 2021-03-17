@@ -1,4 +1,4 @@
-//EV BEDROOM DRESSROOM HAREKENT ISI DUMAN SENSÖRÜ 
+//EV BEDROOM DRESSROOM HAREKENT ISI DUMAN SENSÖRÜ
 
 #include <RH_ASK.h>
 #include <SPI.h> // Not actually used but needed to compile
@@ -13,17 +13,17 @@ RH_ASK driver;
 
 const int gir=A6;  
 int duman = 1;
-
+char *msg = "FHDUMANN";
 
 void setup()
 {
-  
+ 
    pinMode(Buton, INPUT);
    pinMode(gir, INPUT);
    Serial.begin(115200);    // Debugging only
 
    if (!driver.init()) Serial.println("init failed");
-   
+   digitalWrite(duman, LOW);
    Serial.println("hazır");
 
 }
@@ -31,11 +31,25 @@ void setup()
 
 void loop()
 {
-  
+  smoke();
   hareket();
   isi();
-  smoke();
 
+
+}
+
+
+void smoke()
+{
+   duman = analogRead(Buton);
+  // Serial.println(duman);
+   if (duman > 450)
+    {  
+      rdgonder(1);
+     
+      delay(10000);
+
+    }
 }
 
 void hareket()
@@ -43,28 +57,15 @@ void hareket()
    int yaban = analogRead(gir);
    //Serial.println(yaban);
    if (yaban>=550 )
-     {   
-       rdgonder("FHALMALM");
-       delay (2000);
-       rdgonder("FHPIRALM");
+     {  
+       rdgonder(2);
+     
        delay (10000);
-     } 
+     }
 }
 
 
-void smoke()
-{
-   duman = analogRead(Buton);
-   //Serial.println(duman);
-   if (duman > 450)
-    {  
-      rdgonder("FHALMALM");
-      delay (300);
-      rdgonder("FHDUMANN");
-      delay(10000);
 
-    }
-}
 
 
  void isi()
@@ -76,9 +77,8 @@ void smoke()
    {
     //String sicaklik = "FHTEMP" + baba;
     // Serial.println(sicaklik);
-    rdgonder("FHALMALM");
-    delay (1000);
-    rdgonder("FHISIALM");
+    rdgonder(3);
+   
    
    delay(10000);
   }
@@ -91,13 +91,38 @@ void smoke()
 
 
 
-void rdgonder(String rdgiden)
-{
-  char a[]="bbtt";
-  rdgiden.toCharArray(a,9);
-  char *msg = a;
+void rdgonder(int rdgiden)
+{  
+ msg = "FHALMALM";
+driver.send((uint8_t *)msg, strlen(msg));
+  driver.waitPacketSent();
+  Serial.println(msg);
+  delay(1000);
+
+
+ 
+  switch (rdgiden) {
+  case 1:
+   msg= "FHDUMANN";
+    break;
+  case 2:
+    msg= "FHPIRALM";
+    break;
+     case 3:
+    msg= "FHISIALM";
+    break;
+  default:
+    msg= "FHALMALM";
+    break;
+}
+ 
+
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
   Serial.println(msg);
   delay(500);
+
+   
+
+ 
 }
