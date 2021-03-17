@@ -40,6 +40,7 @@ void setup() {
 
 void loop()
 { 
+  
  rfal();
  
  dugmeKont();
@@ -63,23 +64,22 @@ void rfal()
          metin = metin.substring(0,8);
          Serial.print("metin : ");
          Serial.println(metin);
-         if(  metin.substring(0,2) != "TW") return ;
+         if(  metin.substring(0,2) != "TH") return ;
          metin.toCharArray(msg, 9);
 
-       if (metin == "TWREPORT") {
+       if (metin == "THREPORT") {
         isi();
         return;
        }
        
-       if (metin == "TWALMONN") {
+       if (metin == "THALMONN") {
         secure();
         return;
        }
-       if (metin.substring(0,2) == "TW") rdgonder();
-        // if (metin == "TWOFL1OF") rdgonder();
-      
+       if (metin.substring(0,2) == "TH") rdgonder();
+             
    
-         delay(1000);
+        delay(1000);
   
       }
     
@@ -131,14 +131,14 @@ void rfal()
    if (digitalRead(Ac)) 
     {
       
-     msg ="TWOFL1ON";
+     msg ="THOFL1ON";
      delay(20);
      rdgonder();
      delay(10);
    }
    if (digitalRead(Kapa))
    {
-    msg = "TWOFL1OF";
+    msg = "THOFL1OF";
     delay(20);
     rdgonder();
     delay(10);
