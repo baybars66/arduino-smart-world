@@ -34,7 +34,7 @@ char keys[SATIR][SUTUN] = {
 {'7','8','9'},
 {'*','0','#'}
 };
-byte rowPins[SATIR] = { 5, 4, 3, 2 };
+byte rowPins[SATIR] = { 2, 3, 4, 5 };
 byte colPins[SUTUN] = { 6, 7, 8 };
 Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, SATIR, SUTUN );
 void setup()
@@ -49,7 +49,7 @@ display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 // Tampon Bellek sıfırlama
 display.clearDisplay();
 
-//Serial.begin(115200);
+Serial.begin(115200);
 pinMode(A0, OUTPUT);
 pinMode(buzz, OUTPUT);
 Serial.println("hazır");
@@ -69,7 +69,7 @@ void loop()
    if(key){
     zaman=0;
     cal(50);
-     // Serial.println(key);
+      Serial.println(key);
 
       ekran = String(ekran + key);
       yaz(ekran);
