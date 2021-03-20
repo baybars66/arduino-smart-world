@@ -20,6 +20,7 @@ RH_ASK driver;
 char *rdgelen;
 String metin = "";
 char *msg = "FHBASLAA"; 
+String gitti= "";
 
 
 void setup() {
@@ -130,15 +131,16 @@ void rfal()
 { 
    if (digitalRead(Ac)) 
     {
-      
-     msg ="THOFL1ON";
+      gitti="";
+     msg ="THGNL1OF";
      delay(20);
      rdgonder();
      delay(10);
    }
    if (digitalRead(Kapa))
    {
-    msg = "THOFL1OF";
+    gitti="";
+    msg = "THGNL1ON";
     delay(20);
     rdgonder();
     delay(10);
@@ -149,7 +151,8 @@ void rfal()
 
  
 void rdgonder() 
-{ 
+{  if (gitti== msg) return;
+
   driver.send((uint8_t *)msg, strlen(msg));
   driver.waitPacketSent();
   Serial.print("Giden msg : ");
@@ -161,5 +164,6 @@ void rdgonder()
   Serial.print("Giden msg : ");
   Serial.println(msg);
   delay(500);
+  gitti = msg;
   
  }
