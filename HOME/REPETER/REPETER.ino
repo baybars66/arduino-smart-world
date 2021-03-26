@@ -10,8 +10,8 @@
 #include <dht11.h> // dht11 kütüphanesini ekliyoruz.
 
 #define DHT11PIN 2 // DHT11PIN olarak Dijital 2"yi belirliyoruz.
-#define Kapa 5
-#define Ac 9
+#define Kapa 9
+#define Ac 5
 
 dht11 DHT11;
 
@@ -20,8 +20,9 @@ RH_ASK driver;
 char *rdgelen;
 String metin = "";
 char *msg = "FHBASLAA"; 
+char *btnmsg = "FHBASLAA"; 
 String gitti= "";
-
+String btngitti= "";
 
 void setup() {
   
@@ -129,20 +130,26 @@ void rfal()
 
  void dugmeKont()
 { 
-   if (digitalRead(Ac)) 
+   if (digitalRead(Kapa)) 
     {
-      gitti="";
-     msg ="THGNL1OF";
+      btngitti= String( random(6000, 10000));
+      Serial.println("Kapada ");
+     btnmsg ="THGNL1OF";
      delay(20);
-     rdgonder();
+     Serial.print("msgkapada : ");
+  Serial.println(btnmsg);
+     btnrdgonder();
      delay(10);
    }
-   if (digitalRead(Kapa))
+   if (digitalRead(Ac))
    {
-    gitti="";
-    msg = "THGNL1ON";
+    Serial.println("Acta");
+    btngitti= String( random(1, 5000));
+    btnmsg = "THGNL1ON";
     delay(20);
-    rdgonder();
+    Serial.print("msgActa : ");
+  Serial.println(btnmsg);
+    btnrdgonder();
     delay(10);
   
  }
@@ -151,19 +158,58 @@ void rfal()
 
  
 void rdgonder() 
-{  if (gitti== msg) return;
 
-  driver.send((uint8_t *)msg, strlen(msg));
-  driver.waitPacketSent();
-  Serial.print("Giden msg : ");
-  Serial.println(msg);
-  delay(700);
-
-  driver.send((uint8_t *)msg, strlen(msg));
-  driver.waitPacketSent();
-  Serial.print("Giden msg : ");
-  Serial.println(msg);
-  delay(500);
-  gitti = msg;
+{  
   
+  Serial.print("msg : ");
+  Serial.println(msg);
+  
+  if (gitti== msg){
+   Serial.print("buuuu");
+  return;
+}
+  else{
+    
+  
+  
+  driver.send((uint8_t *)msg, strlen(msg));
+  driver.waitPacketSent();
+  //Serial.print("Giden msg : ");
+ // Serial.println(msg);
+  delay(300);
+/*
+  driver.send((uint8_t *)msg, strlen(msg));
+  driver.waitPacketSent();
+ // Serial.print("Giden msg : ");
+  //Serial.println(msg);
+  delay(500);
+  */
+  gitti = msg;
+  }
+ }
+
+
+
+  
+void btnrdgonder() 
+
+{  
+  
+  Serial.print("msg : ");
+  Serial.println(btnmsg);
+  
+  if (btngitti== btnmsg){
+   Serial.print("buuuu");
+  return;
+}
+  else{
+    
+  driver.send((uint8_t *)btnmsg, strlen(btnmsg));
+  driver.waitPacketSent();
+  //Serial.print("Giden msg : ");
+ // Serial.println(msg);
+  delay(300);
+
+ btngitti = btnmsg;
+  }
  }

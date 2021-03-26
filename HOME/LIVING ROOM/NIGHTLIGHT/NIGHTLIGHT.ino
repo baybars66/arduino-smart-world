@@ -42,13 +42,10 @@ void rfal()
        String rdgelen = (char*)buf;
        rdgelen= rdgelen.substring(0,8);
        Serial.println(rdgelen);
-      //if(rdgelen == "THLRNLON") digitalWrite(LED_BUILTIN, HIGH);
-       //if(rdgelen == "THLRNLOF") digitalWrite(LED_BUILTIN, LOW);
-       if(rdgelen == "THALMOFF") digitalWrite(LED_BUILTIN, LOW);
-    
-     if(rdgelen == "TWOFL1ON") digitalWrite(LED_BUILTIN, HIGH);
-       if(rdgelen == "TWOFL1OF") digitalWrite(LED_BUILTIN, LOW);
-       
+      if(rdgelen == "THLRNLON") digitalWrite(LED_BUILTIN, HIGH);
+       if(rdgelen == "THLRNLOF") digitalWrite(LED_BUILTIN, LOW);
+       if(rdgelen == "THALMONN") digitalWrite(LED_BUILTIN, LOW);
+
    
     }
 
