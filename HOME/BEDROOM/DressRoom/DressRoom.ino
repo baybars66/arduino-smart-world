@@ -32,7 +32,7 @@ void setup()
 void loop()
 {
   smoke();
-  hareket();
+  //hareket();
   isi();
 
 
@@ -43,7 +43,7 @@ void smoke()
 {
    duman = analogRead(Buton);
   // Serial.println(duman);
-   if (duman > 450)
+   if (duman > 550)
     {  
       rdgonder(1);
      
