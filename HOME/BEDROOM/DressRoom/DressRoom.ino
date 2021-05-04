@@ -32,7 +32,7 @@ void setup()
 void loop()
 {
   smoke();
-  //hareket();
+  hareket();
   isi();
 
 
