@@ -8,7 +8,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
-#include <Hash.h>
+//#include <Hash.h>
 
 
 char msg[7]="";
@@ -45,7 +45,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             //Serial.println ("[nnnnnnnT");
           ///   USE_SERIAL.printf("[WSc] Connected to url: %s\n",  payload);
               isConnected = true;
-
+         Serial.println ("Websocket Connected");
             // send message to server when Connected
               // socket.io upgrade confirmation message (required)
         webSocket.sendTXT("5");
@@ -86,7 +86,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 void setup() {
   
   Serial.begin(115200);
-
+ Serial.println("...");
+ Serial.println("Initialing");
   USE_SERIAL.begin(115200);
 
   Serial.setDebugOutput(true);
@@ -101,15 +102,20 @@ void setup() {
     USE_SERIAL.flush();
     delay(1000);
   }
-
-  WiFiMulti.addAP("Baybars", "Capan66-kablosuz");
+ 
+  WiFiMulti.addAP("USKUDAR", "Capan66-kablosuz");
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
+  
     Serial.print(".");
   }
-
-  webSocket.beginSocketIO("88.250.131.163", 8666);
+ if (WiFiMulti.run() == WL_CONNECTED) {
+Serial.println("Wifi Connected");
+  
+ }
+  //webSocket.beginSocketIO("88.250.131.163", 8666);
+   webSocket.beginSocketIO("tahtakale.baybarsonal.com", 8666);
   //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
   webSocket.onEvent(webSocketEvent);
 
