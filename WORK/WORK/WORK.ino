@@ -104,14 +104,14 @@ void setup() {
     delay(1000);
   }
 
-  WiFiMulti.addAP("EMNONU", "Capan66-kablosuz");
+  WiFiMulti.addAP("USKUDAR", "Capan66-kablosuz");
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
     Serial.print(".");
   }
 
-  webSocket.beginSocketIO("88.250.131.163", 8666);
+  webSocket.beginSocketIO("78.189.212.131", 8666);
   //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
   webSocket.onEvent(webSocketEvent);
 

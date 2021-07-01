@@ -103,7 +103,7 @@ void setup() {
     delay(1000);
   }
  
-  WiFiMulti.addAP("USKUDAR", "Capan66-kablosuz");
+  WiFiMulti.addAP("Baybars", "Capan66-kablosuz");
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
@@ -114,8 +114,8 @@ void setup() {
 Serial.println("Wifi Connected");
   
  }
-  //webSocket.beginSocketIO("88.250.131.163", 8666);
-   webSocket.beginSocketIO("tahtakale.baybarsonal.com", 8666);
+  webSocket.beginSocketIO("78.189.212.131", 8666);
+   //webSocket.beginSocketIO("tahtakale.baybarsonal.com", 8666);
   //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
   webSocket.onEvent(webSocketEvent);
 
