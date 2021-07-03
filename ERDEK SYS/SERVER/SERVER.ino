@@ -1,25 +1,23 @@
 /*
-   ERDEK SERVER
-   
-   WebSocketClientSocketIO.ino
+  HOME SERVER
+  WebSocketClientSocketIO.ino
+
 
 */
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
-#include <Hash.h>
+//#include <Hash.h>
 
 
 char msg[7]="";
-
+int almkon = 1;
 String str = "";
 String serigelen = "";
 String serigiden = "";
-
 String wifigiden = "";
 String wifigelen = "";
-
 String txtmi = "";
 
 ESP8266WiFiMulti WiFiMulti;
@@ -47,7 +45,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             //Serial.println ("[nnnnnnnT");
           ///   USE_SERIAL.printf("[WSc] Connected to url: %s\n",  payload);
               isConnected = true;
-
+         Serial.println ("Websocket Connected");
             // send message to server when Connected
               // socket.io upgrade confirmation message (required)
         webSocket.sendTXT("5");
@@ -61,7 +59,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         str = String((char*) payload);
         //Serial.println(str);
         delay(50);
-        seriyolla(str);
+        gelen(str); //seriyolla(str);
         
       
         
@@ -88,7 +86,8 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 void setup() {
   
   Serial.begin(115200);
-
+ Serial.println("...");
+ Serial.println("Initialing");
   USE_SERIAL.begin(115200);
 
   Serial.setDebugOutput(true);
@@ -103,16 +102,20 @@ void setup() {
     USE_SERIAL.flush();
     delay(1000);
   }
-
+ 
   WiFiMulti.addAP("ERDALM", "Capan66-kablosuz");
-
   //WiFi.disconnect();
   while (WiFiMulti.run() != WL_CONNECTED) {
   delay(500);
+  
     Serial.print(".");
   }
-
-  webSocket.beginSocketIO("88.250.131.163", 8666);
+ if (WiFiMulti.run() == WL_CONNECTED) {
+Serial.println("Wifi Connected");
+  
+ }
+  webSocket.beginSocketIO("78.189.212.131", 8666);
+   //webSocket.beginSocketIO("tahtakale.baybarsonal.com", 8666);
   //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
   webSocket.onEvent(webSocketEvent);
 
@@ -152,57 +155,57 @@ serial();
  void serial()
  {
    while (Serial.available())
-        { 
-          serigelen = Serial.readString();
-          //Serial.println(serigelen);
-          if ( serigelen.substring(0,2)=="FE")
-             {
-                serigelen = serigelen.substring(0,8);
-                serigelen= "\"" + serigelen+ "\"";
-             // webSocket.sendTXT("42[\"chat message\",\"merhaba\"]");
-                serigelen = "42[\"chat message\", " +serigelen+"]";
-               // Serial.println(serigelen);
-                webSocket.sendTXT(serigelen);
-                }
-          }
+        {  serigelen = Serial.readString();
+           serigelen= serigelen.substring(0,8);
+            if ( serigelen =="FEALMALM")
+              {  if (almkon == 1) yolla("FEALMALM");
+                 
+               }
+           
+           if ( serigelen !="FEALMALM")  yolla(serigelen);
+                
+               
+        }
 
 
 }
 
 
-void seriyolla( String serigiden)
-{//Serial.print("HTALAL");
-
-  int uzunluk = serigiden.length();
+void gelen( String wifigelen)
+{  
+  int uzunluk = wifigelen.length();
   uzunluk=uzunluk - 2;
-  txtmi = serigiden.substring(0,2);
-  if (txtmi=="42") serigiden=serigiden.substring (19, uzunluk);
+  txtmi = wifigelen.substring(0,2);
 
- // Serial.println(serigiden);
+  if (txtmi=="42") wifigelen=wifigelen.substring (19, uzunluk);
+  wifigelen = wifigelen.substring(0,8);
+  if (wifigelen == "TEALMOFF" ) almkon = 2;
+  if (wifigelen == "TEALMONN" ) almkon = 1;
+  if (wifigelen.substring(0,2) =="TH") Serial.println(wifigelen);   
 
-  if(serigiden.substring(0,2) == "TE") 
-    { Serial.println(serigiden);
- //  Serial.println("bababva");
-
+  if (wifigelen == "TAREPORT" ) rap();
+  if (wifigelen == "TEREPORT" ) rap();
    
-   }
- if(serigiden.substring(0,2) == "TA") 
-    { Serial.println(serigiden);
- //  Serial.println("bababva");
-
-    }
   str="";
+  
 }
 
-/*
-void posta(String note)
+
+
+
+ void yolla(String gidecek)
 {
-    
-  wifigiden = "\"" + note + "\"";
-    // webSocket.sendTXT("42[\"chat message\",\"merhaba\"]");
-   wifigiden = "42[\"chat message\", " + wifigiden + "]";
-   // Serial.println(wifigiden);
-    webSocket.sendTXT(wifigiden);
+   gidecek= "\"" + gidecek+ "\"";
+   gidecek = "42[\"chat message\", " +gidecek+"]";
+   webSocket.sendTXT(gidecek);
+  
+}
+
+
+
+void rap()
+{
+  if ( almkon == 1) yolla ("FEOKOKON");  
+  if ( almkon == 2) yolla ("FEOKOKOF");  
 
 }
-*/
